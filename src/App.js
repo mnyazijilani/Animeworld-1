@@ -2,7 +2,7 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import Getproduct from './components/Getproduct';
@@ -57,9 +57,9 @@ function AppShell() {
 function App() {
   return (
     <CartProvider>
-      <BrowserRouter>
+      <HashRouter>
         <AppShell />
-      </BrowserRouter>
+      </HashRouter>
     </CartProvider>
   );
 }
