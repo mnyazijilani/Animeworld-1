@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import BootstrapCarousel from "bootstrap/js/dist/carousel";
 
+const publicUrl = process.env.PUBLIC_URL || "";
+
 const slides = [
   {
-    image: "/anime-backgrounds/background35.jpeg",
+    image: `${publicUrl}/anime-backgrounds/background35.jpeg`,
     title: "DEMON SLAYER",
     emoji: "👹",
     textClass: "text-light",
@@ -11,7 +13,7 @@ const slides = [
       "Demon Slayer: Kimetsu no Yaiba follows Tanjiro Kamado as he becomes a demon slayer after tragedy strikes his family and his sister is transformed into a demon.",
   },
   {
-    image: "/anime-backgrounds/bg36.jpeg",
+    image: `${publicUrl}/anime-backgrounds/bg36.jpeg`,
     title: "SUZUME",
     emoji: "🌅",
     textClass: "text-light",
@@ -19,7 +21,7 @@ const slides = [
       "Suzume follows a girl crossing Japan to close mysterious doors that unleash disasters while confronting grief, memory, and healing.",
   },
   {
-    image: "/anime-backgrounds/backgroundimage 34.jpeg",
+    image: `${publicUrl}/anime-backgrounds/backgroundimage%2034.jpeg`,
     title: "ATTACK ON TITAN",
     emoji: "⚔️",
     textClass: "text-light",

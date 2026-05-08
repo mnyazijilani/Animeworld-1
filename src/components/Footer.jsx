@@ -1,5 +1,7 @@
 import React from 'react'
 
+const publicUrl = process.env.PUBLIC_URL || "";
+
 const Footer = () => {
   return (
     <div>
@@ -7,7 +9,7 @@ const Footer = () => {
           className="row p-3 footer-hero"
           style={{
             backgroundImage:
-              'linear-gradient(180deg, rgba(6, 10, 24, 0.78), rgba(6, 10, 24, 0.9)), url(/anime-backgrounds/background35.jpeg)',
+              `linear-gradient(180deg, rgba(6, 10, 24, 0.78), rgba(6, 10, 24, 0.9)), url(${publicUrl}/anime-backgrounds/background35.jpeg)`,
           }}
         >
 		<div className="col-md-4">
@@ -27,13 +29,13 @@ const Footer = () => {
 		<div className="col-md-4">
 			<h2 className="text-center text-light">Stay connected</h2>
 			<a href="https://facebook.com">
-				<img src="/images/fb.png" alt="Facebook" width="50" height="50" />
+				<img src={`${publicUrl}/images/fb.png`} alt="Facebook" width="50" height="50" />
 			</a>
 			<a href="https://instagram.com">
-				<img src="/images/in.png" alt="Instagram" width="50" height="50"/>
+				<img src={`${publicUrl}/images/in.png`} alt="Instagram" width="50" height="50"/>
 			</a>
 			<a href="https://x.com">
-				<img src="/images/x.png" alt="X" width="50" height="50"/>
+				<img src={`${publicUrl}/images/x.png`} alt="X" width="50" height="50"/>
 			</a>
 			<p className="text-light">You can get in touch with us on our social media platforms at @AnimeWorld.</p>
 		</div>

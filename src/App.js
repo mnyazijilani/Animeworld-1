@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Signin from './components/Signin';
+import Signout from './components/Signout';
 import Signup from './components/Signup';
 import Getproduct from './components/Getproduct';
 import Addproduct from './components/Addproduct';
@@ -13,19 +14,11 @@ import Cart from './components/Cart';
 import Chatbot from './components/Chatbot';
 import MovieCategoryPage from './components/MovieCategoryPage';
 import { CartProvider } from './contexts/CartContext';
-
-const pageBackgrounds = {
-  '/': '/anime-backgrounds/home-anime.svg',
-  '/signup': '/anime-backgrounds/signup-anime.svg',
-  '/signin': '/anime-backgrounds/signin-anime.svg',
-  '/addproduct': '/anime-backgrounds/addproduct-anime.svg',
-  '/cart': '/anime-backgrounds/cart-anime.svg',
-  '/makepayment': '/anime-backgrounds/payment-anime.svg',
-};
+import { resolveBackgroundImage } from './components/backgroundimages';
 
 function AppShell() {
   const location = useLocation();
-  const backgroundImage = pageBackgrounds[location.pathname.toLowerCase()] || pageBackgrounds['/'];
+  const backgroundImage = resolveBackgroundImage(location.pathname);
 
   return (
     <div
@@ -40,8 +33,9 @@ function AppShell() {
         <main className="page-content container-fluid">
           <Routes>
             <Route path="/" element={<Getproduct />} />
-            <Route path="/Signup" element={<Signup />} />
-            <Route path="/Signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signout" element={<Signout />} />
             <Route path="/addproduct" element={<Addproduct />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/makepayment" element={<Mpesapayment />} />

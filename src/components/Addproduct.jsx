@@ -36,7 +36,7 @@ const Addproduct = () => {
   return (
     <div className="row mt-1 justify-content-center">
       <div className="col-md-6">
-        <div className="glass-form-card shadow-lg p-4 p-md-5">
+        <div className="glass-form-card shadow-lg p-4 p-md-5 text-dark">
           <span className="glass-form-eyebrow">New Drop</span>
           <h1 className="glass-form-title">Add Product</h1>
           <p className="glass-form-subtitle">

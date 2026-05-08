@@ -1,29 +1,43 @@
-import React from 'react'
-import { useCart } from '../contexts/CartContext'
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useCart } from "../contexts/CartContext";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+
+const PRIMARY_LINKS = [
+  { to: "/", label: "Home" },
+  { to: "/addproduct", label: "Add product" },
+];
 
 const Navbar = () => {
-	const{cartCount}=useCart();
+  const { cartCount } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const signedInUser = localStorage.getItem('signedInUser');
-  const searchValue = searchParams.get('search') || '';
-  const isHomePage = location.pathname === '/';
+  const [signedInUser, setSignedInUser] = useState(false);
+  const isHomePage = location.pathname.toLowerCase() === "/";
+  const [searchValue, setSearchValue] = useState(
+    searchParams.get("search") || "",
+  );
 
-  const handleLogout = () => {
-    localStorage.removeItem('signedInUser');
-    navigate('/signin');
-  };
+  useEffect(() => {
+    setSearchValue(searchParams.get("search") || "");
+  }, [searchParams]);
 
-  const handleSearchChange = (event) => {
-    const nextValue = event.target.value;
+  useEffect(() => {
+    setSignedInUser(Boolean(localStorage.getItem("signedInUser")));
+  }, [location.pathname]);
+
+  const applySearch = (nextValue) => {
     const nextParams = new URLSearchParams(searchParams);
 
     if (nextValue.trim()) {
-      nextParams.set('search', nextValue);
+      nextParams.set("search", nextValue);
     } else {
-      nextParams.delete('search');
+      nextParams.delete("search");
     }
 
     if (!isHomePage) {
@@ -34,29 +48,47 @@ const Navbar = () => {
     setSearchParams(nextParams);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    applySearch(searchValue);
+  };
+
   return (
-     <section className="row">
-			<div className="col-md-12">
-				<nav className="navbar navbar-expand-md bg-light text-dark">
-					<Link to="/" className="navbar-brand text-dark d-flex align-items-center gap-2">
+    <section className="row">
+      <div className="col-md-12">
+        <nav className="navbar navbar-expand-md glass-navbar">
+          <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
             <span className="navbar-brand-copy">
               <span className="navbar-brand-title">ANIMEWORLD</span>
-              <span className="navbar-brand-tag">otaku market</span>
             </span>
           </Link>
-					<button className="navbar-toggler" type="button" data-bs-target="#navbarcollapse" data-bs-toggle="collapse" aria-controls="navbarcollapse" aria-expanded="false" aria-label="Toggle navigation">
-						<span className="navbar-toggler-icon"></span>
-					</button>
-					<div className="collapse navbar-collapse" id="navbarcollapse">
-						<div className="navbar-nav">
-							<Link to="/" className="nav-link text-dark">Home</Link>
-							<Link to="/addproduct" className="nav-link text-dark">Add product</Link>
-							<Link to="/signup" className="nav-link text-dark">Sign up</Link>
-							{!signedInUser && (
-								<Link to="/signin" className="nav-link text-dark">Sign in</Link>
-							)}
-						</div>
-            <div className="navbar-search-wrap mx-md-4 my-3 my-md-0">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-target="#navbarcollapse"
+            data-bs-toggle="collapse"
+            aria-controls="navbarcollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarcollapse">
+            <div className="navbar-nav">
+              {PRIMARY_LINKS.map((link) => (
+                <Link key={link.to} to={link.to} className="nav-link text-dark">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <form
+              className="navbar-search-wrap navbar-search-form mx-md-4 my-3 my-md-0"
+              onSubmit={handleSearchSubmit}
+            >
               <input
                 type="search"
                 className="form-control glass-input navbar-search-input"
@@ -64,30 +96,50 @@ const Navbar = () => {
                 value={searchValue}
                 onChange={handleSearchChange}
               />
-            </div>
-						<div className='navbar-nav ms-auto d-flex flex-row align-items-center gap-2 navbar-actions'>
-							<Link to="/cart" className='nav-link position-relative'>
-							<i className='fas fa-shopping-cart'></i>🛒{cartCount >0&&(
-								<span className='badge bg-danger position-absolute top-0 start-100 translate-middle'>
-									{cartCount}
-								</span>
-							)}</Link>
-              {signedInUser && location.pathname !== '/signin' && (
-                <button
-                  type="button"
-                  className="btn btn-outline-danger btn-sm"
-                  onClick={handleLogout}
+              <button type="submit" className="btn navbar-search-btn text-dark">
+                Search
+              </button>
+            </form>
+            <div className="navbar-auth-links d-flex align-items-center gap-2 me-md-3 mb-3 mb-md-0">
+              {signedInUser ? (
+                <Link
+                  to="/signout"
+                  className="btn navbar-auth-btn navbar-auth-btn-secondary text-dark"
                 >
-                  Logout
-                </button>
+                  Sign out
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to="/signup"
+                    className="btn navbar-auth-btn navbar-auth-btn-secondary text-dark"
+                  >
+                    Sign up
+                  </Link>
+                  <Link
+                    to="/signin"
+                    className="btn navbar-auth-btn navbar-auth-btn-primary text-dark"
+                  >
+                    Sign in
+                  </Link>
+                </>
               )}
-						</div>
-					</div>
-				</nav>
-			</div>
-		</section>
+            </div>
+            <div className="navbar-nav ms-auto d-flex flex-row align-items-center gap-2 navbar-actions">
+              <Link to="/cart" className="nav-link position-relative">
+                <i className="fas fa-shopping-cart"></i>🛒
+                {cartCount > 0 && (
+                  <span className="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+  );
+};
 
-  )
-}
-
-export default Navbar
+export default Navbar;

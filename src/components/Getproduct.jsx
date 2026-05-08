@@ -139,7 +139,7 @@ const Getproducts = () => {
   };
 
   return (
-    <div className="row">
+    <div className="row text-dark">
       {/* carousel goes here  */}
       <Carousel />
 
