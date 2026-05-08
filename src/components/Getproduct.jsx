@@ -33,7 +33,7 @@ const animeThemes = [
   },
 ];
 
-const Getproducts = () => {
+const Getproduct = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -227,4 +227,4 @@ const Getproducts = () => {
   );
 };
 
-export default Getproducts;
+export default Getproduct;
