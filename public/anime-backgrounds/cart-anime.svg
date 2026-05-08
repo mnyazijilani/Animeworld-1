@@ -1,0 +1,18 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#081A1B"/>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1230" cy="150" r="84" fill="#DAFFF7"/>
+  <path d="M0 674C164 640 278 594 404 594C586 594 708 688 892 688C1042 688 1172 604 1328 604C1424 604 1514 628 1600 626V900H0V674Z" fill="#0A3434"/>
+  <path d="M0 762C190 718 326 708 456 708C620 708 756 762 922 762C1070 762 1208 702 1360 702C1448 702 1528 720 1600 716V900H0V762Z" fill="#0F5451"/>
+  <path d="M312 520C382 452 512 446 594 506C674 566 674 674 598 726C500 792 344 758 286 658C250 596 258 572 312 520Z" fill="#F7FFF4" fill-opacity="0.26"/>
+  <path d="M322 548C376 498 484 492 548 540C620 594 620 670 560 712C478 770 362 736 316 654C292 610 292 584 322 548Z" fill="#A8F0D2" fill-opacity="0.46"/>
+  <path d="M438 552C420 520 438 482 470 470C522 450 580 490 580 548C580 592 548 628 504 634C476 638 450 624 438 552Z" fill="#F7FFF4" fill-opacity="0.76"/>
+  <path d="M0 842C234 804 368 812 510 812C684 812 830 770 976 770C1140 770 1266 838 1600 788V900H0V842Z" fill="#061113" fill-opacity="0.62"/>
+  <defs>
+    <linearGradient id="sky" x1="800" y1="0" x2="800" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#113E44"/>
+      <stop offset="0.52" stop-color="#187A72"/>
+      <stop offset="1" stop-color="#7FD4B5"/>
+    </linearGradient>
+  </defs>
+</svg>

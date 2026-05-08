@@ -1,140 +1,230 @@
-import React,{useState , useEffect} from 'react' ;
-import axios from'axios'
-import Carousel from './Carousel';
-import {useNavigate} from 'react-router-dom' ;
-import Footer from './Footer';
-import Chatbot from './Chatbot';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Footer from "./Footer";
+import Carousel from "./Carousel";
+import { useCart } from "../contexts/CartContext";
+import { filterProductsBySearch } from "./movieSections";
+
+const animeThemes = [
+  {
+    title: "Attack on Titan",
+    accent: "theme-titan",
+    emoji: "⚔️",
+    mood: "War-torn, intense, and relentless.",
+    description:
+      "A darker world of sacrifice, survival, and the price of freedom.",
+  },
+  {
+    title: "Demon Slayer",
+    accent: "theme-slayer",
+    emoji: "👹",
+    mood: "Fiery, emotional, and heroic.",
+    description: "A vivid mix of heart, sword fights, and unforgettable bonds.",
+  },
+  {
+    title: "Suzume",
+    accent: "theme-suzume",
+    emoji: "🌅",
+    mood: "Dreamy, reflective, and beautiful.",
+    description:
+      "A softer cinematic atmosphere built around healing, memory, and wonder.",
+  },
+];
 
 const Getproducts = () => {
-  const navigate=useNavigate()
-  // declare the states here 
-  const [loading,setLoading]=useState("")
-  const[products,setProducts]=useState([])
-  const[error,setError]=useState ("")
-  const[search,setSearch]=useState("")
-  const [cart, setCart] = useState([])
-  const[visibleCount, setVisibleCount]=useState(8);
-  const getproducts=async()=>{
-   setLoading("Please wait...")
-   try{
-     const response=await axios.get ("https://hildahmbuni.alwaysdata.net/api/getproducts")
-     setProducts(response.data)
-     setLoading("")
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-   }catch (error){
-   setError("Something went wrong")
-   setLoading("")
-  }}
- //  call the function 
- useEffect(()=>{
- getproducts()
-} , [])
-// reset visible count when category changes 
-useEffect(()=>{
- setVisibleCount(8)
- }, []);
-// load cart from localStorage (on mount)
-useEffect(() => {
- const savedCart = JSON.parse(localStorage.getItem("cart"));
- if (savedCart) {
-   setCart(savedCart);
- }
-},[]);
+  const { addToCart } = useCart();
+  // declare the states here
+  const [loading, setLoading] = useState("");
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState("");
+  const [visibleCount, setVisibleCount] = useState(8);
+  const getproducts = async () => {
+    setLoading("Please wait...");
+    try {
+      const response = await axios.get(
+        "https://hildahmbuni.alwaysdata.net/api/getproducts",
+      );
+      setProducts(response.data);
+      setLoading("");
+    } catch (error) {
+      setError("Something went wrong");
+      setLoading("");
+    }
+  };
+  //  call the function
+  useEffect(() => {
+    getproducts();
+  }, []);
+  // reset visible count when category changes
+  useEffect(() => {
+    setVisibleCount(8);
+  }, []);
+  const imagepath = "https://hildahmbuni.alwaysdata.net/static/images/";
+  const search = searchParams.get("search") || "";
 
-// Save cart to localStorage whenever it changes
-useEffect(() => {
- localStorage.setItem("cart", JSON.stringify(cart));
-}, [cart]);
+  const getRankMeta = (index) => {
+    const rank = index + 1;
 
+    if (rank === 1) {
+      return { badge: "Top 1", accent: "top-rank-gold", rating: 5.0 };
+    }
 
+    if (rank === 2) {
+      return { badge: "Top 2", accent: "top-rank-silver", rating: 4.8 };
+    }
 
+    if (rank === 3) {
+      return { badge: "Top 3", accent: "top-rank-bronze", rating: 4.7 };
+    }
 
-const imagepath="https://hildahmbuni.alwaysdata.net/static/images/"
-// filter products 
-const filtered_products=products.filter((item)=>
-item.product_name.toLowerCase().includes(search.toLowerCase())||
-item.product_description.toLowerCase().includes(search.toLowerCase())
-);const addToCart = (product) => {
- const existingItem = cart.find((item) => item.product_id === product.product_id);
+    return {
+      badge: `Rank #${rank}`,
+      accent: "top-rank-default",
+      rating: Math.max(4.1, 4.6 - index * 0.05).toFixed(1),
+    };
+  };
+  // filter products
+  const filtered_products = filterProductsBySearch(products, search);
 
- if (existingItem) {
-   const updatedCart = cart.map((item) =>
-     item.product_id === product.product_id
-       ? { ...item, quantity: item.quantity + 1 }
-       : item
-   );
-   setCart(updatedCart);
- } else {
-   setCart([...cart, { ...product, quantity: 1 }]);
- }
+  const renderProductCard = (singleproduct, index, extraClass = "") => {
+    const rankMeta = getRankMeta(index);
+
+    return (
+      <div
+        className={`col-md-3 mb-4 ${extraClass}`.trim()}
+        key={`${singleproduct.product_id}-${extraClass || "grid"}`}
+      >
+        <div className="card shadow h-100 product-ranking-card product-card-dark">
+          <div className={`product-rank-badge ${rankMeta.accent}`}>
+            {rankMeta.badge}
+          </div>
+          <img
+            src={imagepath + singleproduct.product_photo}
+            alt={singleproduct.product_name}
+            style={{ height: "200px", objectFit: "cover" }}
+          />
+          <div className="card-body">
+            <div className="product-rating-row">
+              <span className="product-stars">★★★★★</span>
+              <span className="product-rating-score">{rankMeta.rating}</span>
+            </div>
+            <h1 className="text-info">{singleproduct.product_name}</h1>
+            <p>{singleproduct.product_description}</p>
+            <b>Ksh {singleproduct.product_cost}</b>
+            <br />
+            <button
+              className="btn btn-dark mb-2"
+              onClick={() =>
+                navigate("/makepayment", { state: { singleproduct } })
+              }
+            >
+              Purchase Now
+            </button>
+            <br />
+            <button
+              className="btn btn-success mb-2"
+              onClick={() => addToCart(singleproduct)}
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="row">
+      {/* carousel goes here  */}
+      <Carousel />
+
+      <div className="home-section-nav-wrap">
+        <div className="home-section-nav">
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/sad")}
+          >
+            Sad Movies
+          </button>
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/horror")}
+          >
+            Horror Movies
+          </button>
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/latest")}
+          >
+            Latest Movies
+          </button>
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/beginner")}
+          >
+            Beginner Picks
+          </button>
+        </div>
+      </div>
+
+      {/* bind the states */}
+      <h2 className="text-primary">{loading}</h2>
+      <h2 className="text-warning">{error}</h2>
+
+      {/* map the products  */}
+      {filtered_products
+        .slice(0, visibleCount)
+        .map((singleproduct, index) => renderProductCard(singleproduct, index))}
+      {/*  load more button goes here  */}
+      {visibleCount < filtered_products.length && (
+        <div className="text-center mt-4">
+          <button
+            className="btn btn-primary"
+            onClick={() => setVisibleCount(visibleCount + 8)}
+          >
+            Load More
+          </button>
+        </div>
+      )}
+
+      <section className="col-12 anime-theme-hero">
+        <div className="anime-theme-intro">
+          <span className="anime-theme-eyebrow">Featured Worlds</span>
+          <h1 className="anime-theme-title">
+            Attack on Titan, Demon Slayer, and Suzume set the tone here.
+          </h1>
+          <p className="anime-theme-copy">
+            AnimeWorld leans into action, emotion, and cinematic wonder with a
+            homepage inspired by these three standout stories.
+          </p>
+        </div>
+        <div className="row justify-content-center">
+          {animeThemes.map((theme) => (
+            <div className="col-md-4 mb-4" key={theme.title}>
+              <div className={`anime-theme-card ${theme.accent}`}>
+                <div className="anime-theme-symbol">{theme.emoji}</div>
+                <h2 className="anime-theme-card-title">{theme.title}</h2>
+                <p className="anime-theme-mood">{theme.mood}</p>
+                <p className="anime-theme-description">{theme.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* footer goes here  */}
+      <Footer />
+    </div>
+  );
 };
 
-
- return (
-   <div className='row'>
-     {/* carousel goes here  */}
-     <Carousel />
-
-     {/* navbar goes here  */}
-     <h1 className='text-danger'>Available products</h1>
-     <div className="classname row justify-content-center mt-3 mb-3">
-       <input
-       className='form-control w-50'
-       type='search'
-       placeholder='Search product...'
-       value={search}
-       onChange={(e)=>setSearch(e.target.value)}
-       />
-     </div>
-     <h5 className='text-success text-center'>Cart Items: {cart.length}</h5>
-     {/* bind the states */}
-     <h2 className='text-primary'>{loading}</h2>
-     <h2 className='text-warning'>{error}</h2>
-    
-     {/* map the products  */}
-     { filtered_products.slice(0,visibleCount).map((singleproduct)=>(
-       
-       <div className="col-md-3 mb-4" key={singleproduct.product_id}>
-         <div className="card shadow  h-100 bg-primary">
-           <img src= {imagepath + singleproduct.product_photo} alt=""  style={{height:"200px"}}/>
-           <div className="card-body">
-             <h1 className='text-info'>{singleproduct.product_name}</h1>
-             <p>{singleproduct.product_description}</p>
-             <b>Ksh {singleproduct.product_cost}</b><br />
-             <button className='btn btn-dark'onClick={()=>navigate("/makepayment",{state:{singleproduct}})}>Purchase Now</button>
-             <button
- className='btn btn-success mt-2'
- onClick={() => addToCart(singleproduct)}
->
- Add to Cart
-</button>
-
-           </div>
-         </div>
-       </div>
-     ))}
-     {/*  load more button goes here  */}
-{visibleCount< filtered_products.length &&(
- <div className='text-center mt-4'>
- <button
- className='btn btn-primary'
- onClick={()=>setVisibleCount(visibleCount+8)}
- >
- Load More
- </button>
- </div>
-)}
-     {/* footer goes here  */}
-     <Footer/>
-     {/* Chatbot goes here  */}
-     <Chatbot/>
-   </div>
- )
-}
-
-
-export default Getproducts
-  
-
-  
-  
+export default Getproducts;

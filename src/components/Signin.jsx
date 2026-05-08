@@ -27,11 +27,11 @@ const Signin = () => {
       // axios is a library tjat helps in sending of different https requests ei post/get...
       // await is used in asynchronous functions to pause for sometimes until the response has been received  
       // response-anytime you make a request to server we will always have a response which will be stored in the response variable 
-      const response = await axios.post("https://hildahmbuni.alwaysdata.net/ap/signin" ,data)
-      console.log(response)
+      const response = await axios.post("https://hildahmbuni.alwaysdata.net/api/signin" ,data)
       setLoading("")
       // check if successful by use of the response 
       if(response.data.user){
+      localStorage.setItem("signedInUser", JSON.stringify(response.data.user))
 // redirect to get products componenet
       navigate("/")
       }else{
@@ -45,22 +45,22 @@ const Signin = () => {
   }
 return(
   <div className='row mt-4 justify-content-center'>
-    <div className='card shadow text-center p-3 col-md-6' > 
-      <h1>Sigin</h1>
+    <div className='col-md-6'>
+      <div className='glass-form-card shadow-lg text-center p-4 p-md-5'>
+        <span className="glass-form-eyebrow">Welcome Back</span>
+        <h1 className='glass-form-title'>Sign In</h1>
+        <p className="glass-form-subtitle">Step back into AnimeWorld and pick up where you left off.</p>
         <h5 className='text-info'>{loading}</h5>
         <h5 className="text-danger">{error}</h5>
-        <form onSubmit={submit}> 
-          {email}
-          <input type="email" className="form-control" placeholder='Enter Email 📧'required value={email} onChange={(e)=>setEmail(e.target.value)}/><br />
-           
-          {password}
-          <input type="password" className="form-control" placeholder='Enter Password 🔒' required value={password} onChange={(e)=>setPassword(e.target.value)}/><br />
-          
-        <button  type="submit" className='btn btn-primary col-md-12'>Sign In</button> <br />
-        </form>  <br />
-        <p>Don't have an account?<Link to="/signup">Signup</Link></p>
+        <form onSubmit={submit} className="glass-form-layout"> 
+          <input type="email" className="form-control glass-input" placeholder='Enter Email 📧'required value={email} onChange={(e)=>setEmail(e.target.value)}/>
+          <input type="password" className="form-control glass-input" placeholder='Enter Password 🔒' required value={password} onChange={(e)=>setPassword(e.target.value)}/>
+          <button  type="submit" className='btn btn-primary col-md-12 glass-submit-btn'>Sign In</button>
+        </form>
+        <p className="glass-form-footer">Don't have an account? <Link to="/signup">Signup</Link></p>
       </div>
       </div>
+    </div>
 )
 
       

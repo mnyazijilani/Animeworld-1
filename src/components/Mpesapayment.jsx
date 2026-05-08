@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios"
 
 const Mpesapayment = () => {
-
- const {singleproduct} = useLocation().state || {}
-
-  const imagepath="http://hildahmbuni.alwaysdata.net/static/images/"
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { singleproduct, cartItems = [], totalPrice } = location.state || {};
+  const product = singleproduct || cartItems[0];
+  const amount = singleproduct ? singleproduct.product_cost : totalPrice;
+  const imagepath="https://hildahmbuni.alwaysdata.net/static/images/"
  
   // declare the state 
   const [phone, setPhone] =useState("")
@@ -24,11 +26,11 @@ const Mpesapayment = () => {
     
     const formdata = new FormData ()
 
-    formdata.append ("amount" , singleproduct.product_cost)
+    formdata.append ("amount" , amount)
     formdata.append ("phone", phone)
 
     try {
-      const response = await axios.post("http://hildahmbuni.alwaysdata.net/api/mpesa_payment" , formdata)
+      const response = await axios.post("https://hildahmbuni.alwaysdata.net/api/mpesa_payment" , formdata)
       setSuccess(response.data.message)
       setLoading("")
       
@@ -38,118 +40,60 @@ const Mpesapayment = () => {
     }
   
   }
+
+  if (!product || !amount) {
+    return (
+      <div className='row justify-content-center'>
+        <div className="col-md-8">
+          <div className="glass-form-card shadow-lg p-4 p-md-5 text-center">
+          <span className="glass-form-eyebrow">Payment</span>
+          <h1 className='glass-form-title'>Make payment - Lipa na Mpesa</h1>
+          <p className='glass-form-subtitle text-danger'>No product or cart information was provided for payment.</p>
+          <button type="button" className='btn btn-primary glass-submit-btn' onClick={() => navigate('/')}>
+            Back to products
+          </button>
+        </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='row justify-content-center'>
-      <h1 className='text-success'>Make payment-Lipa na Mpesa</h1>
-      <div className="card shadow col-md-8 p-4">
+      <div className="col-md-8">
+        <div className="glass-form-card shadow-lg p-4 p-md-5">
+        <span className="glass-form-eyebrow">Secure Checkout</span>
+        <h1 className='glass-form-title'>Make payment - Lipa na Mpesa</h1>
+        <p className="glass-form-subtitle">A quick, polished checkout flow for your AnimeWorld order.</p>
 
-      {/* image goes here  */}
-      <img src={ imagepath + singleproduct.product_photo} alt="" style={{height:"100px" , objectFit:"cover"}} />
+        <div className="glass-payment-summary mb-4">
+          <img
+            src={ imagepath + product.product_photo}
+            alt={product.product_name}
+            className="glass-payment-image"
+          />
 
-      <h5 className='text-success text-start'>{singleproduct.product_name}</h5>
-      <p className='text-start'>{singleproduct.product_description}</p>
-      <b className='text-success text-start'>Ksh {singleproduct.product_cost}</b> <br />
+          <div className="glass-payment-copy">
+            <h5 className='glass-payment-name'>{singleproduct ? product.product_name : `Cart checkout (${cartItems.length} items)`}</h5>
+            <p className='glass-payment-description'>{singleproduct ? product.product_description : 'Complete your M-Pesa payment for the items currently in your cart.'}</p>
+            <b className='glass-payment-amount'>Ksh {amount}</b>
+          </div>
+        </div>
 
-      {/* bin￼
-Rounded
-Font Family (view all on Google Fonts)
-￼
-Leckerli One
-Font Variant
-￼
-Regular 400 Normal
-Font Size
-￼
-Font Color
-￼
-Background Color
-￼
-Installation
-First, use the download button to download the files listed below. Place the files in the root directory of your website.
+        <h2 className='text-warning'>{loading}</h2>
+        <h2 className='text-success'>{success}</h2>
+        <h2 className='text-danger'>{error}</h2>
 
-android-chrome-192x192.png
-android-chrome-512x512.png
-apple-touch-icon.png
-favicon-16x16.png
-favicon-32x32.png
-favicon.ico
-site.webmanifest
-Next, copy the following link tags and paste them into the head of your HTML.
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-￼Copy
-Why favicon.io?
-Whether you want to generate a favicon from text, from an existing image, or from an emoji we've got you covered. The favicon generator is completely free and extremely easy to use. The generated favicon will work for all browsers and multiple platforms.
-
-Getting started with the favicon generator
-The tool above will allow you to generate a favicon from text. Start by choosing one to two letters for the favicon generator. Since the favicon generator outputs very small images it's important to use few characters for maximum legibility. Once cool feature with this favicon generator is that you can copy and paste both unicode characters and emojis into the text box. This is useful for when an emoji isn't listed on the emoji favicon page. Here's an example keeping it 💯
-
-Making the background simple
-Next, select the shape of the background. There are three simple shapes available: square, circle, and rounded. These are the most common shapes used to generate a favicon. You can see examples of these shapes with ProductHunt, IndieHackers, and HackerNews.
-
-Selecting the font for your favicon
-The favicon generator uses Google Fonts which has 800+ fonts available. This is useful to match the font used on your own website. In the future there will be a dedicated font page to help you select your font. It will have filters for languages, styles, and commonly used fonts. You can edit the font size once you've selected your font. Try to take up as much space as possible.
-
-Tailoring the colors
-The last step is to select the colors. If you have the HEX values of the colors you want then you can just enter them into the input box. Otherwise you can use some of the colors that we suggest using the color picker below each input box. One cool feature is that you can use transparent backgrounds. Simply type "transparent" into the background color box. Here's an example of a favicon generated with a transparent background .
-
-Created by: John Sorrentino
-Copyright 2026
-
-About
-I built Favicon.io because creating a favicon should be a simple process. No other favicon generator or favicon creator can make a well designed favicon from text. If you like favicon.io or have a suggestion feel free to say hello. Feedback is much appreciated!
-
-Built With
-Bulma
-
-Huebee
-
-Twemoji
-
-Center.js
-
-Favicon.js
-
-Resources
-Favicon Converter
-
-Favicon Generator
-
-Emoji Favicons
-
-Logo Generator
-
-Contact
-Contact Us
-
-Twitter
-
-Privacy Policy
-
-Terms of Use
-
-Discover more
-Squarespace website kits
-Image conversion service
-Website logo templates
-Favicon conversion service
-Logo design services
-PNG icon converter
-Apple Touch Icons
-Icon design service
-Custom favicon creation
-￼d states  */}
-      <h2 className='text-warning'>{loading}</h2>
-      <h2 className='text-success'>{success}</h2>
-      <h2 className='text-danger'>{error}</h2>
-
-      <form action="" onSubmit={handlesubmit}>
-        <input type="number"className='form-control' placeholder='Enter Phone 254XXXX' onChange={(e) => setPhone(e.target.value)} /> <br />
-        <button type='submit' className='btn btn-success w-100'>Make payment</button>
-      </form>
+        <form action="" onSubmit={handlesubmit} className="glass-form-layout">
+          <input
+            type="number"
+            className='form-control glass-input'
+            placeholder='Enter Phone 254XXXX'
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <button type='submit' className='btn btn-success w-100 glass-submit-btn'>Make payment</button>
+        </form>
+      </div>
       </div>
     </div>
   );

@@ -1,8 +1,34 @@
 import { render, screen } from '@testing-library/react';
+import React from 'react';
+import axios from 'axios';
+
+jest.mock(
+  'react-router-dom',
+  () => ({
+    BrowserRouter: ({ children }) => <>{children}</>,
+    Routes: ({ children }) => <>{children}</>,
+    Route: ({ element }) => element,
+    Link: ({ children, to, ...props }) => (
+      <a href={to} {...props}>
+        {children}
+      </a>
+    ),
+    useLocation: () => ({ pathname: '/' }),
+    useNavigate: () => jest.fn(),
+  }),
+  { virtual: true }
+);
+
+jest.mock('axios', () => ({
+  get: jest.fn(),
+  post: jest.fn(),
+}));
+
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders app heading', async () => {
+  axios.get.mockResolvedValue({ data: [] });
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = await screen.findByText(/welcome to animeworld/i);
   expect(linkElement).toBeInTheDocument();
 });
