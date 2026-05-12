@@ -49,7 +49,10 @@ const Cart = () => {
       <div className="row">
         <div className="col-md-8">
           {cartItems.map((item) => (
-            <div key={item.id} className="card mb-3 shadow glass-form-card">
+            <div
+              key={item.id}
+              className="card mb-3 shadow glass-form-card glass-cart-card"
+            >
               <div className="card-body">
                 <div className="row">
                   <div className="col-md-3">
@@ -108,7 +111,7 @@ const Cart = () => {
         </div>
 
         <div className="col-md-4">
-          <div className="card shadow glass-form-card">
+          <div className="card shadow glass-form-card glass-cart-card">
             <div className="card-body">
               <h5 className="card-title text-info">Order Summary</h5>
               <hr />
