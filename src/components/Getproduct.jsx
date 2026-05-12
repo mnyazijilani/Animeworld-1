@@ -127,7 +127,7 @@ const Getproduct = () => {
             </button>
             <br />
             <button
-              className="btn btn-success mb-2"
+              className="btn btn-dark mb-2 add-to-cart-btn"
               onClick={() => addToCart(singleproduct)}
             >
               Add to Cart
@@ -172,6 +172,41 @@ const Getproduct = () => {
             onClick={() => navigate("/movies/beginner")}
           >
             Beginner Picks
+          </button>
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/scifi")}
+          >
+            Sci-Fi Movies
+          </button>
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/romantic")}
+          >
+            Romantic Movies
+          </button>
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/adventure")}
+          >
+            Adventure Movies
+          </button>
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/action")}
+          >
+            Action Movies
+          </button>
+          <button
+            type="button"
+            className="btn home-section-btn"
+            onClick={() => navigate("/movies/fantasy")}
+          >
+            Fantasy Movies
           </button>
         </div>
       </div>

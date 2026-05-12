@@ -57,50 +57,26 @@
 
 .page-shell .card {
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 24px;
-  background: linear-gradient(
-    150deg,
-    rgba(255, 255, 255, 0.28),
-    rgba(255, 255, 255, 0.1)
-  );
-  box-shadow:
-    0 24px 48px rgba(6, 10, 24, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: #ffffff;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
 }
 
 .page-shell .card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.28), transparent 42%),
-    radial-gradient(
-      circle at top right,
-      rgba(255, 255, 255, 0.22),
-      transparent 36%
-    );
-  pointer-events: none;
+  display: none;
 }
 
 .glass-form-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 28px;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.24),
-    rgba(255, 255, 255, 0.08)
-  );
-  box-shadow:
-    0 24px 55px rgba(5, 10, 30, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.32);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  color: #f6f8ff;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 32px 70px rgba(4, 14, 39, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: inherit;
 }
 
 .glass-form-card,
@@ -108,7 +84,7 @@
 .glass-form-card .glass-form-title,
 .glass-form-card .glass-form-subtitle,
 .glass-form-card .glass-form-footer {
-  color: #111111;
+  color: inherit;
 }
 
 .glass-form-card .glass-form-title {
@@ -117,22 +93,11 @@
 
 .glass-form-card .glass-form-eyebrow {
   border-color: rgba(17, 17, 17, 0.14);
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(245, 245, 245, 0.94);
 }
 
 .glass-form-card::before {
-  content: "";
-  position: absolute;
-  inset: -30% auto auto -10%;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.22),
-    transparent 68%
-  );
-  pointer-events: none;
+  display: none;
 }
 
 .glass-form-eyebrow {
@@ -162,6 +127,13 @@
 .glass-form-layout {
   display: grid;
   gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 26px 60px rgba(4, 14, 39, 0.16);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .glass-label {
@@ -219,19 +191,13 @@
 }
 
 .page-shell .btn:not(.btn-close) {
-  border: 1px solid rgba(255, 255, 255, 0.26);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 16px;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0.08)
-  );
-  color: #111111;
-  box-shadow:
-    0 14px 28px rgba(10, 14, 34, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.14);
+  color: inherit;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -242,16 +208,9 @@
 .page-shell .btn:not(.btn-close):hover,
 .page-shell .btn:not(.btn-close):focus {
   transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.22);
   border-color: rgba(255, 231, 164, 0.58);
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.28),
-    rgba(255, 255, 255, 0.12)
-  );
-  color: #111111;
-  box-shadow:
-    0 18px 32px rgba(10, 14, 34, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.18);
 }
 
 .page-shell .btn.btn-outline-secondary:not(.btn-close),
@@ -265,20 +224,52 @@
   color: #111111;
 }
 
+.add-to-cart-btn {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #111111 !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.add-to-cart-btn:hover,
+.add-to-cart-btn:focus {
+  background: rgba(255, 255, 255, 0.26) !important;
+  color: #111111 !important;
+}
+
 .glass-submit-btn {
-  border: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
-  background: #111111;
+  background: rgba(255, 255, 255, 0.18);
   color: #111111;
   font-weight: 700;
   letter-spacing: 0.04em;
-  box-shadow: 0 16px 30px rgba(17, 17, 17, 0.26);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .glass-submit-btn:hover,
 .glass-submit-btn:focus {
-  background: #000000;
+  background: rgba(255, 255, 255, 0.26);
   color: #111111;
+}
+
+.glass-btn {
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #111111 !important;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.glass-btn:hover,
+.glass-btn:focus {
+  background: rgba(255, 255, 255, 0.26) !important;
+  color: #111111 !important;
 }
 
 .footer-message-box {
@@ -343,9 +334,10 @@
   gap: 1.2rem;
   align-items: center;
   padding: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.08);
+  background: #111827;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
 }
 
 .glass-payment-image {
@@ -576,22 +568,49 @@
   z-index: 1;
 }
 
+.page-shell form,
+.page-shell .glass-form-layout,
+.page-shell .navbar-search-form,
+.page-shell .footer-contact-form {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 26px 60px rgba(4, 14, 39, 0.16);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.page-shell .form-control {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.page-shell .form-control:focus {
+  border-color: rgba(255, 231, 164, 0.72);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 0 0 0.25rem rgba(255, 214, 102, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #111111;
+}
+
+.page-shell .navbar-search-form .form-control {
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .product-ranking-card {
   position: relative;
   overflow: hidden;
 }
 
 .product-card-dark {
-  background: linear-gradient(
-    180deg,
-    rgba(18, 22, 36, 0.72),
-    rgba(10, 12, 22, 0.62)
-  ) !important;
+  background: #12172a !important;
   color: #f4f7ff;
-  border-color: rgba(255, 255, 255, 0.18) !important;
-  box-shadow:
-    0 24px 46px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
 }
 
 .product-card-dark .card-body {
@@ -694,28 +713,18 @@
   overflow: hidden;
   height: 100%;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 26px;
-  box-shadow:
-    0 22px 40px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  background: #0f172f;
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.18);
   color: #f5f7ff;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 
 .anime-theme-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 45%),
-    radial-gradient(
-      circle at top right,
-      rgba(255, 255, 255, 0.14),
-      transparent 34%
-    );
-  pointer-events: none;
+  display: none;
 }
 
 .anime-theme-symbol {

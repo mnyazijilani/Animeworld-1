@@ -3,6 +3,52 @@ export const sectionKeywords = {
   horror: ["horror", "dark", "ghost", "demon", "blood", "terror"],
   latest: ["latest", "new", "recent", "fresh", "2024", "2025", "2026"],
   beginner: ["beginner", "starter", "adventure", "fun", "classic", "popular"],
+  scifi: [
+    "scifi",
+    "sci-fi",
+    "science fiction",
+    "space",
+    "future",
+    "robot",
+    "mecha",
+    "cyberpunk",
+  ],
+  romantic: [
+    "romantic",
+    "romance",
+    "love",
+    "relationship",
+    "heart",
+    "dating",
+    "affection",
+  ],
+  adventure: [
+    "adventure",
+    "journey",
+    "quest",
+    "explore",
+    "travel",
+    "expedition",
+    "action",
+  ],
+  action: [
+    "action",
+    "fight",
+    "battle",
+    "combat",
+    "war",
+    "fast-paced",
+    "explosive",
+  ],
+  fantasy: [
+    "fantasy",
+    "magic",
+    "myth",
+    "dragon",
+    "wizard",
+    "kingdom",
+    "enchanted",
+  ],
 };
 
 export const movieSectionDefinitions = {
@@ -33,6 +79,41 @@ export const movieSectionDefinitions = {
     description:
       "Easy-entry recommendations if you’re just getting started with anime movies.",
     fallbackStart: 1,
+  },
+  scifi: {
+    id: "scifi-movies",
+    title: "Sci-Fi Movies",
+    description:
+      "Futuristic worlds, high-tech wonder, and cosmic adventures for sci-fi fans.",
+    fallbackStart: 0,
+  },
+  romantic: {
+    id: "romantic-movies",
+    title: "Romantic Movies",
+    description:
+      "Sweet, heartfelt stories that bring romance, emotion, and connection.",
+    fallbackStart: 0,
+  },
+  adventure: {
+    id: "adventure-movies",
+    title: "Adventure Movies",
+    description:
+      "Action-packed journeys, epic quests, and wild exploration for thrill seekers.",
+    fallbackStart: 0,
+  },
+  action: {
+    id: "action-movies",
+    title: "Action Movies",
+    description:
+      "High-energy fights, adrenaline moments, and explosive anime action.",
+    fallbackStart: 0,
+  },
+  fantasy: {
+    id: "fantasy-movies",
+    title: "Fantasy Movies",
+    description:
+      "Magical worlds, myths, and legendary heroes from fantasy anime realms.",
+    fallbackStart: 0,
   },
 };
 

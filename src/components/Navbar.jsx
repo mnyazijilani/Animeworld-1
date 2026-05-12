@@ -7,10 +7,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 
-const PRIMARY_LINKS = [
-  { to: "/", label: "Home" },
-  { to: "/addproduct", label: "Add product" },
-];
+const PRIMARY_LINKS = [{ to: "/", label: "Home" }];
 
 const Navbar = () => {
   const { cartCount } = useCart();

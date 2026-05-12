@@ -102,7 +102,7 @@ const MovieCategoryPage = () => {
             </button>
             <br />
             <button
-              className="btn btn-success mb-2"
+              className="btn btn-dark mb-2 add-to-cart-btn"
               onClick={() => addToCart(singleproduct)}
             >
               Add to Cart
