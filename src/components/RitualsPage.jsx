@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Flower2, MoonStar, Play, Wind } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ExternalLink,
+  Flower2,
+  MoonStar,
+  Play,
+  Wind,
+} from "lucide-react";
 
 const dailyRituals = [
   "2-minute guided breathing before class or work",
@@ -36,6 +44,30 @@ const yogaSections = [
     description:
       "A restorative position that invites stillness and can feel grounding at the end of the day.",
     steps: "Lie near a wall, extend your legs upward, soften the shoulders, and breathe without forcing anything.",
+  },
+];
+
+const yogaVideos = [
+  {
+    title: "Beginner Yoga Flow",
+    description:
+      "A gentle beginner lesson for easing into movement, breath, and simple body awareness without rushing.",
+    embed: "https://www.youtube.com/embed/v7AYKMP6rOE",
+    href: "https://www.youtube.com/watch?v=v7AYKMP6rOE",
+  },
+  {
+    title: "Yoga for Stress Relief",
+    description:
+      "A slower lesson focused on soft movement and breathing that can help when the body feels tense or overloaded.",
+    embed: "https://www.youtube.com/embed/hJbRpHZr_d0",
+    href: "https://www.youtube.com/watch?v=hJbRpHZr_d0",
+  },
+  {
+    title: "Bedtime Yoga",
+    description:
+      "A calm evening practice that fits the rest-and-reset tone of the rituals page and works well before sleep.",
+    embed: "https://www.youtube.com/embed/BiWDsfZ3zbo",
+    href: "https://www.youtube.com/watch?v=BiWDsfZ3zbo",
   },
 ];
 
@@ -109,6 +141,50 @@ export default function RitualsPage() {
                 <div className="yoga-steps">
                   <strong>How to try it</strong>
                   <span>{pose.steps}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="resource-section">
+          <div className="section-heading">
+            <p className="eyebrow">
+              <Play size={16} />
+              Yoga lessons
+            </p>
+            <h2>Video lessons you can follow along with at a gentle pace.</h2>
+            <p className="section-text">
+              These direct video embeds are there to make the rituals page more
+              practical. Start slowly, pause anytime, and skip any movement
+              that causes pain or discomfort.
+            </p>
+          </div>
+
+          <div className="resource-video-grid">
+            {yogaVideos.map((video) => (
+              <article key={video.title} className="resource-video-card">
+                <div className="resource-video-frame">
+                  <iframe
+                    src={video.embed}
+                    title={video.title}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="resource-video-copy">
+                  <h3>{video.title}</h3>
+                  <p>{video.description}</p>
+                  <a
+                    href={video.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="resource-inline-link"
+                  >
+                    Open on YouTube
+                    <ExternalLink size={16} />
+                  </a>
                 </div>
               </article>
             ))}

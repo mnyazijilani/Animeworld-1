@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -8,58 +7,7 @@ import {
   Mail,
   UserRound,
 } from "lucide-react";
-
-function buildRequestBody(values) {
-  const params = new URLSearchParams();
-
-  Object.entries(values).forEach(([key, value]) => {
-    params.append(key, value);
-  });
-
-  return params;
-}
-
-async function postUrlEncoded(url, values) {
-  const body = buildRequestBody(values).toString();
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body,
-  });
-
-  const text = await response.text();
-  let data = {};
-
-  try {
-    data = text ? JSON.parse(text) : {};
-  } catch {
-    data = { message: text };
-  }
-
-  return { ok: response.ok, status: response.status, data };
-}
-
-function getRequestErrorMessage(error, fallbackMessage) {
-  if (error?.response?.data?.message) {
-    return error.response.data.message;
-  }
-
-  if (error?.response?.data?.error) {
-    return error.response.data.error;
-  }
-
-  if (
-    error instanceof TypeError ||
-    error?.message === "Network Error" ||
-    error?.message === "Failed to fetch"
-  ) {
-    return fallbackMessage;
-  }
-
-  return error?.message || fallbackMessage;
-}
+import { createUserAccount } from "../utils/auth";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -89,55 +37,20 @@ export default function Signup() {
     };
 
     try {
-      const response = await axios.post(
-        "https://hildahmbuni.alwaysdata.net/api/signup",
-        buildRequestBody(payload),
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        },
-      );
+      const user = createUserAccount(payload);
 
-      setSuccess(response.data.message || "Account created successfully.");
+      setSuccess(
+        `Welcome aboard, ${user.name || "friend"}! Your account is ready.`,
+      );
       setForm({
         name: "",
         email: "",
         password: "",
       });
     } catch (requestError) {
-      try {
-        const retryResponse = await postUrlEncoded(
-          "https://hildahmbuni.alwaysdata.net/api/signup",
-          payload,
-        );
-
-        if (retryResponse.ok) {
-          setSuccess(
-            retryResponse.data.message || "Account created successfully.",
-          );
-          setForm({
-            name: "",
-            email: "",
-            password: "",
-          });
-        } else {
-          setError(
-            retryResponse.data.message ||
-              retryResponse.data.error ||
-              requestError.response?.data?.message ||
-              requestError.response?.data?.error ||
-              `Sign up failed with status ${retryResponse.status}.`,
-          );
-        }
-      } catch (retryError) {
-        setError(
-          getRequestErrorMessage(
-            retryError,
-            "We couldn't reach the sign-up service. Please check the API/CORS configuration and try again.",
-          ),
-        );
-      }
+      setError(
+        requestError?.message || "We couldn't create your account right now.",
+      );
     } finally {
       setLoading(false);
     }

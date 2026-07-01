@@ -96,6 +96,45 @@ const journalPromises = [
   "Keep a personal timeline of reflections",
 ];
 
+const awarenessDays = [
+  {
+    month: "April",
+    day: "07",
+    title: "World Health Day",
+    text: "A gentle reminder to look at health as a whole, including sleep, stress, movement, and emotional wellbeing.",
+  },
+  {
+    month: "May",
+    day: "28",
+    title: "Menstrual Hygiene Day",
+    text: "Useful for opening kinder, more informed conversations about periods, dignity, and everyday health support.",
+  },
+  {
+    month: "July",
+    day: "24",
+    title: "International Self-Care Day",
+    text: "A good day to revisit small habits that protect energy before life starts to feel too heavy again.",
+  },
+  {
+    month: "September",
+    day: "10",
+    title: "World Suicide Prevention Day",
+    text: "A moment to encourage help-seeking, honest check-ins, and safer conversations when someone may be struggling.",
+  },
+  {
+    month: "October",
+    day: "10",
+    title: "World Mental Health Day",
+    text: "An anchor date for reflection, awareness, and sharing practical support for emotional wellbeing.",
+  },
+  {
+    month: "December",
+    day: "01",
+    title: "World AIDS Day",
+    text: "A chance to hold space for awareness, stigma reduction, and compassionate community health conversations.",
+  },
+];
+
 function MoodMeter() {
   const [selectedMood, setSelectedMood] = useState("Steady");
 
@@ -235,15 +274,30 @@ export default function Getproduct() {
             <div className="card-route">
               <div className="route-step">
                 <span>01</span>
-                <p>Check your mood</p>
+                <div className="route-step-copy">
+                  <strong>Check your mood</strong>
+                  <p>
+                    Start by noticing what feels heavy, calm, or hopeful today.
+                  </p>
+                </div>
               </div>
               <div className="route-step">
                 <span>02</span>
-                <p>Choose a grounding ritual</p>
+                <div className="route-step-copy">
+                  <strong>Choose a grounding ritual</strong>
+                  <p>
+                    Pick one calming action that matches your energy right now.
+                  </p>
+                </div>
               </div>
               <div className="route-step">
                 <span>03</span>
-                <p>Reach out if you need extra support</p>
+                <div className="route-step-copy">
+                  <strong>Reach out for support</strong>
+                  <p>
+                    Use extra help when you need care beyond self-guided tools.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -333,6 +387,37 @@ export default function Getproduct() {
               </span>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="awareness-section">
+        <div className="section-heading">
+          <p className="eyebrow">
+            <Calendar size={16} />
+            Awareness calendar
+          </p>
+          <h2>
+            Health awareness days that can spark timely care and conversation.
+          </h2>
+          <p className="section-text">
+            These annual dates can help schools, families, and friend groups
+            make space for reflection, education, and early support.
+          </p>
+        </div>
+
+        <div className="awareness-grid">
+          {awarenessDays.map((item) => (
+            <article key={item.title} className="awareness-card">
+              <div className="awareness-date">
+                <span>{item.month}</span>
+                <strong>{item.day}</strong>
+              </div>
+              <div className="awareness-copy">
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
             </article>
           ))}
         </div>

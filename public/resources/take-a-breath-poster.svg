@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1520" viewBox="0 0 1080 1520">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8efe5"/>
+      <stop offset="100%" stop-color="#e7f0e8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1520" fill="url(#bg)"/>
+  <circle cx="860" cy="260" r="190" fill="#d7e6d7"/>
+  <circle cx="210" cy="1260" r="240" fill="#f1d8c9"/>
+  <text x="90" y="180" fill="#8f462a" font-family="Georgia, serif" font-size="38" letter-spacing="10">MINDWELL POSTER</text>
+  <text x="90" y="360" fill="#1f1a17" font-family="Georgia, serif" font-size="118" font-weight="700">Take a breath.</text>
+  <text x="90" y="470" fill="#45604a" font-family="Georgia, serif" font-size="118" font-weight="700">Then begin again.</text>
+  <text x="90" y="610" fill="#645648" font-family="Arial, sans-serif" font-size="44">When stress rises, try this quiet reset:</text>
+  <rect x="90" y="700" width="900" height="520" rx="48" fill="#fffaf4" opacity="0.92"/>
+  <text x="140" y="820" fill="#bc5f3c" font-family="Arial, sans-serif" font-size="40" font-weight="700">1. Relax your shoulders.</text>
+  <text x="140" y="915" fill="#bc5f3c" font-family="Arial, sans-serif" font-size="40" font-weight="700">2. Inhale slowly for four counts.</text>
+  <text x="140" y="1010" fill="#bc5f3c" font-family="Arial, sans-serif" font-size="40" font-weight="700">3. Exhale gently for six counts.</text>
+  <text x="140" y="1105" fill="#bc5f3c" font-family="Arial, sans-serif" font-size="40" font-weight="700">4. Choose one next step, not the whole day.</text>
+  <text x="90" y="1350" fill="#1f1a17" font-family="Georgia, serif" font-size="72">Small support still counts.</text>
+  <text x="90" y="1430" fill="#645648" font-family="Arial, sans-serif" font-size="30">mindwell resources • wellbeing • student support</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1520" viewBox="0 0 1080 1520">
+  <defs>
+    <linearGradient id="bg2" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#edf6f9"/>
+      <stop offset="100%" stop-color="#f8efe5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1520" fill="url(#bg2)"/>
+  <rect x="90" y="90" width="900" height="1340" rx="56" fill="#fffaf4" opacity="0.94"/>
+  <text x="160" y="240" fill="#45604a" font-family="Arial, sans-serif" font-size="36" letter-spacing="8">DAILY WELLNESS REMINDER</text>
+  <text x="160" y="390" fill="#1f1a17" font-family="Georgia, serif" font-size="110" font-weight="700">Water.</text>
+  <text x="160" y="500" fill="#1f1a17" font-family="Georgia, serif" font-size="110" font-weight="700">Move.</text>
+  <text x="160" y="610" fill="#1f1a17" font-family="Georgia, serif" font-size="110" font-weight="700">Recover.</text>
+  <text x="160" y="740" fill="#645648" font-family="Arial, sans-serif" font-size="42">Try these simple anchors during study or work:</text>
+  <text x="180" y="860" fill="#bc5f3c" font-family="Arial, sans-serif" font-size="40" font-weight="700">• Drink a glass of water after waking up</text>
+  <text x="180" y="950" fill="#bc5f3c" font-family="Arial, sans-serif" font-size="40" font-weight="700">• Stand, stretch, or walk every study block</text>
+  <text x="180" y="1040" fill="#bc5f3c" font-family="Arial, sans-serif" font-size="40" font-weight="700">• Take a short screen break before bed</text>
+  <text x="180" y="1130" fill="#bc5f3c" font-family="Arial, sans-serif" font-size="40" font-weight="700">• Rest without waiting for burnout first</text>
+  <text x="160" y="1290" fill="#45604a" font-family="Georgia, serif" font-size="68">Healthy habits grow from repetition.</text>
+  <text x="160" y="1370" fill="#645648" font-family="Arial, sans-serif" font-size="30">mindwell resources • hydration • movement • recovery</text>
+</svg>

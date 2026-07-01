@@ -1,7 +1,14 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, DoorOpen } from "lucide-react";
+import { logoutUser } from "../utils/auth";
 
-export default function Signout() {
+export default function Signout({ onSignout }) {
+  useEffect(() => {
+    logoutUser();
+    onSignout?.();
+  }, [onSignout]);
+
   return (
     <main className="auth-page">
       <section className="signout-card">

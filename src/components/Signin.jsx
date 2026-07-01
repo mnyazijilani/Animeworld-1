@@ -1,61 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Eye, EyeOff, Heart, ShieldCheck } from "lucide-react";
+import { authenticateUser } from "../utils/auth";
 
-function buildRequestBody(values) {
-  const params = new URLSearchParams();
-
-  Object.entries(values).forEach(([key, value]) => {
-    params.append(key, value);
-  });
-
-  return params;
-}
-
-async function postUrlEncoded(url, values) {
-  const body = buildRequestBody(values).toString();
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body,
-  });
-
-  const text = await response.text();
-  let data = {};
-
-  try {
-    data = text ? JSON.parse(text) : {};
-  } catch {
-    data = { message: text };
-  }
-
-  return { ok: response.ok, status: response.status, data };
-}
-
-function getRequestErrorMessage(error, fallbackMessage) {
-  if (error?.response?.data?.message) {
-    return error.response.data.message;
-  }
-
-  if (error?.response?.data?.error) {
-    return error.response.data.error;
-  }
-
-  if (
-    error instanceof TypeError ||
-    error?.message === "Network Error" ||
-    error?.message === "Failed to fetch"
-  ) {
-    return fallbackMessage;
-  }
-
-  return error?.message || fallbackMessage;
-}
-
-export default function Signin() {
+export default function Signin({ onSignin }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,49 +24,15 @@ export default function Signin() {
     };
 
     try {
-      const response = await axios.post(
-        "https://hildahmbuni.alwaysdata.net/api/signin",
-        buildRequestBody(credentials),
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        },
-      );
+      const session = authenticateUser(credentials);
+      onSignin?.(session.session);
 
-      setSuccess(response.data.message || "Signed in successfully.");
+      setSuccess(`Welcome back, ${session.user.name || "friend"}!`);
       setEmail("");
       setPassword("");
       window.setTimeout(() => navigate("/"), 1200);
     } catch (requestError) {
-      try {
-        const retryResponse = await postUrlEncoded(
-          "https://hildahmbuni.alwaysdata.net/api/signin",
-          credentials,
-        );
-
-        if (retryResponse.ok) {
-          setSuccess(retryResponse.data.message || "Signed in successfully.");
-          setEmail("");
-          setPassword("");
-          window.setTimeout(() => navigate("/"), 1200);
-        } else {
-          setError(
-            retryResponse.data.message ||
-              retryResponse.data.error ||
-              requestError.response?.data?.message ||
-              requestError.response?.data?.error ||
-              `Sign in failed with status ${retryResponse.status}.`,
-          );
-        }
-      } catch (retryError) {
-        setError(
-          getRequestErrorMessage(
-            retryError,
-            "We couldn't reach the sign-in service. Please check the API/CORS configuration and try again.",
-          ),
-        );
-      }
+      setError(requestError?.message || "We couldn't sign you in right now.");
     } finally {
       setLoading(false);
     }
@@ -134,18 +48,22 @@ export default function Signin() {
           </span>
           <h1>Welcome back to your calm corner.</h1>
           <p>
-            Sign in to continue with check-ins, supportive routines, and mental-health tools built
-            to feel gentle instead of overwhelming.
+            Sign in to continue with check-ins, supportive routines, and
+            mental-health tools built to feel gentle instead of overwhelming.
           </p>
 
           <div className="auth-aside-card">
             <div className="auth-aside-item">
               <strong>Daily check-ins</strong>
-              <span>Track your mood and notice patterns with less pressure.</span>
+              <span>
+                Track your mood and notice patterns with less pressure.
+              </span>
             </div>
             <div className="auth-aside-item">
               <strong>Private support tools</strong>
-              <span>Return to saved routines, grounding prompts, and care reminders.</span>
+              <span>
+                Return to saved routines, grounding prompts, and care reminders.
+              </span>
             </div>
           </div>
         </div>
@@ -157,7 +75,9 @@ export default function Signin() {
             </span>
             <p className="auth-eyebrow">Sign in</p>
             <h2>Your wellbeing space is waiting.</h2>
-            <p className="auth-intro">Use your email and password to continue.</p>
+            <p className="auth-intro">
+              Use your email and password to continue.
+            </p>
           </div>
 
           <form className="auth-form" onSubmit={handleSubmit}>
@@ -215,7 +135,11 @@ export default function Signin() {
               </p>
             ) : null}
 
-            <button type="submit" className="auth-primary-button" disabled={loading}>
+            <button
+              type="submit"
+              className="auth-primary-button"
+              disabled={loading}
+            >
               {loading ? "Signing in..." : "Sign in"}
               <ArrowRight size={18} />
             </button>
