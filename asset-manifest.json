@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Animeworld-1/static/css/main.1a1402cc.css",
+    "main.js": "/Animeworld-1/static/js/main.3720f9df.js",
+    "static/js/453.59e60eda.chunk.js": "/Animeworld-1/static/js/453.59e60eda.chunk.js",
+    "index.html": "/Animeworld-1/index.html",
+    "main.1a1402cc.css.map": "/Animeworld-1/static/css/main.1a1402cc.css.map",
+    "main.3720f9df.js.map": "/Animeworld-1/static/js/main.3720f9df.js.map",
+    "453.59e60eda.chunk.js.map": "/Animeworld-1/static/js/453.59e60eda.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1a1402cc.css",
+    "static/js/main.3720f9df.js"
+  ]
+}
