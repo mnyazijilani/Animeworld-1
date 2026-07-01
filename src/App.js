@@ -1,48 +1,77 @@
-import './App.css';
+import "./App.css";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
-import Signin from './components/Signin';
-import Signout from './components/Signout';
-import Signup from './components/Signup';
-import Getproduct from './components/Getproduct';
-import Addproduct from './components/Addproduct';
-import Mpesapayment from './components/Mpesapayment';
-import Navbar from './components/Navbar';
-import Cart from './components/Cart';
-import Chatbot from './components/Chatbot';
-import MovieCategoryPage from './components/MovieCategoryPage';
-import { CartProvider } from './contexts/CartContext';
-import { resolveBackgroundImage } from './components/backgroundimages';
+import { HashRouter, Link, Route, Routes, useLocation } from "react-router-dom";
+import { Heart } from "lucide-react";
+import Signin from "./components/Signin";
+import Signout from "./components/Signout";
+import Signup from "./components/Signup";
+import Getproduct from "./components/Getproduct";
+import AnonymousChat from "./components/AnonymousChat";
+import Journal from "./components/Journal";
+import SupportPage from "./components/SupportPage";
+import RitualsPage from "./components/RitualsPage";
+import FaqPage from "./components/FaqPage";
+import HelpChatbot from "./components/HelpChatbot";
+
+function Navbar() {
+  return (
+    <nav className="navbar">
+      <Link className="navbar-brand" to="/">
+        <span className="brand-mark">
+          <Heart size={18} />
+        </span>
+        <span className="brand-copy">
+          <strong>MindWell</strong>
+          <span>Daily mental care</span>
+        </span>
+      </Link>
+
+      <div className="navbar-links">
+        <Link to="/support">Support</Link>
+        <Link to="/rituals">Rituals</Link>
+        <Link to="/journal">Journal</Link>
+        <Link to="/community">Community</Link>
+        <Link to="/faq">FAQ</Link>
+      </div>
+
+      <div className="navbar-actions">
+        <Link className="nav-secondary" to="/signin">
+          Sign in
+        </Link>
+        <Link className="nav-primary" to="/signup">
+          Get started
+        </Link>
+      </div>
+    </nav>
+  );
+}
 
 function AppShell() {
   const location = useLocation();
-  const backgroundImage = resolveBackgroundImage(location.pathname);
+  const isHome = location.pathname === "/";
 
   return (
-    <div
-      className="App page-shell"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
+    <div className="App page-shell">
       <div className="page-overlay">
-        <Navbar />
-        <header className="App-header">
-          <h1 className="text-light">Welcome to AnimeWorld</h1>
-        </header>
-        <main className="page-content container-fluid">
-          <Routes>
-            <Route path="/" element={<Getproduct />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signout" element={<Signout />} />
-            <Route path="/addproduct" element={<Addproduct />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/makepayment" element={<Mpesapayment />} />
-            <Route path="/movies/:category" element={<MovieCategoryPage />} />
-          </Routes>
-        </main>
-        <Chatbot />
+        {isHome ? (
+          <header className="site-header">
+            <Navbar />
+          </header>
+        ) : null}
+
+        <Routes>
+          <Route path="/" element={<Getproduct />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signout" element={<Signout />} />
+          <Route path="/community" element={<AnonymousChat />} />
+          <Route path="/journal" element={<Journal />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/rituals" element={<RitualsPage />} />
+          <Route path="/faq" element={<FaqPage />} />
+        </Routes>
+
+        <HelpChatbot />
       </div>
     </div>
   );
@@ -50,11 +79,9 @@ function AppShell() {
 
 function App() {
   return (
-    <CartProvider>
-      <HashRouter>
-        <AppShell />
-      </HashRouter>
-    </CartProvider>
+    <HashRouter>
+      <AppShell />
+    </HashRouter>
   );
 }
 

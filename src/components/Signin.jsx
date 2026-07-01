@@ -1,71 +1,234 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-const Signin = () => {
-  const[email,setEmail]=useState("")
-  const[password,setPassword]= useState("") 
-  // hook to inform user
-  const[loading,setLoading]=useState("")  
+import axios from "axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, Eye, EyeOff, Heart, ShieldCheck } from "lucide-react";
 
-  const[error,setError]=useState("")
-  // function to pragrammatically redirect to a different component using path 
-  const navigate = useNavigate()
-  
-  // function to handle signin 
-  const submit=async(e)=>{
-    e.preventDefault()  
-    // prevent default actions-reload 
-    // console.log("signed in success")
-    setLoading ("Please wait as we sign you in...")
-    try {
-      // prepare our data using the FormData object 
-      // FormData allows storong of key-value pairs by use of methods append
-      const data =new FormData() 
-      data.append("email",email)
-      data.append("password",password)
-      // sending post request to oyr flask api endpoint 
-      // axios is a library tjat helps in sending of different https requests ei post/get...
-      // await is used in asynchronous functions to pause for sometimes until the response has been received  
-      // response-anytime you make a request to server we will always have a response which will be stored in the response variable 
-      const response = await axios.post("https://hildahmbuni.alwaysdata.net/api/signin" ,data)
-      setLoading("")
-      // check if successful by use of the response 
-      if(response.data.user){
-      localStorage.setItem("signedInUser", JSON.stringify(response.data.user))
-// redirect to get products componenet
-      navigate("/")
-      }else{
-        setError(response.data.message)
-      }
-      
-    } catch (error) {
-      setLoading("")
-      setError(error.message)
-    }
-  }
-return(
-  <div className='row mt-4 justify-content-center'>
-    <div className='col-md-6'>
-      <div className='glass-form-card shadow-lg text-center p-4 p-md-5'>
-        <span className="glass-form-eyebrow">Welcome Back</span>
-        <h1 className='glass-form-title'>Sign In</h1>
-        <p className="glass-form-subtitle">Step back into AnimeWorld and pick up where you left off.</p>
-        <h5 className='text-info'>{loading}</h5>
-        <h5 className="text-danger">{error}</h5>
-        <form onSubmit={submit} className="glass-form-layout"> 
-          <input type="email" className="form-control glass-input" placeholder='Enter Email 📧'required value={email} onChange={(e)=>setEmail(e.target.value)}/>
-          <input type="password" className="form-control glass-input" placeholder='Enter Password 🔒' required value={password} onChange={(e)=>setPassword(e.target.value)}/>
-          <button  type="submit" className='btn btn-primary col-md-12 glass-submit-btn'>Sign In</button>
-        </form>
-        <p className="glass-form-footer">Don't have an account? <Link to="/signup">Signup</Link></p>
-      </div>
-      </div>
-    </div>
-)
+function buildRequestBody(values) {
+  const params = new URLSearchParams();
 
-      
-    
-  
+  Object.entries(values).forEach(([key, value]) => {
+    params.append(key, value);
+  });
+
+  return params;
 }
 
-export default Signin
+async function postUrlEncoded(url, values) {
+  const body = buildRequestBody(values).toString();
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body,
+  });
+
+  const text = await response.text();
+  let data = {};
+
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    data = { message: text };
+  }
+
+  return { ok: response.ok, status: response.status, data };
+}
+
+function getRequestErrorMessage(error, fallbackMessage) {
+  if (error?.response?.data?.message) {
+    return error.response.data.message;
+  }
+
+  if (error?.response?.data?.error) {
+    return error.response.data.error;
+  }
+
+  if (
+    error instanceof TypeError ||
+    error?.message === "Network Error" ||
+    error?.message === "Failed to fetch"
+  ) {
+    return fallbackMessage;
+  }
+
+  return error?.message || fallbackMessage;
+}
+
+export default function Signin() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setLoading(true);
+    setSuccess("");
+    setError("");
+
+    const credentials = {
+      email: email.trim(),
+      password: password.trim(),
+    };
+
+    try {
+      const response = await axios.post(
+        "https://hildahmbuni.alwaysdata.net/api/signin",
+        buildRequestBody(credentials),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        },
+      );
+
+      setSuccess(response.data.message || "Signed in successfully.");
+      setEmail("");
+      setPassword("");
+      window.setTimeout(() => navigate("/"), 1200);
+    } catch (requestError) {
+      try {
+        const retryResponse = await postUrlEncoded(
+          "https://hildahmbuni.alwaysdata.net/api/signin",
+          credentials,
+        );
+
+        if (retryResponse.ok) {
+          setSuccess(retryResponse.data.message || "Signed in successfully.");
+          setEmail("");
+          setPassword("");
+          window.setTimeout(() => navigate("/"), 1200);
+        } else {
+          setError(
+            retryResponse.data.message ||
+              retryResponse.data.error ||
+              requestError.response?.data?.message ||
+              requestError.response?.data?.error ||
+              `Sign in failed with status ${retryResponse.status}.`,
+          );
+        }
+      } catch (retryError) {
+        setError(
+          getRequestErrorMessage(
+            retryError,
+            "We couldn't reach the sign-in service. Please check the API/CORS configuration and try again.",
+          ),
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className="auth-page">
+      <section className="auth-layout">
+        <div className="auth-aside">
+          <span className="auth-badge">
+            <Heart size={16} />
+            MindWell access
+          </span>
+          <h1>Welcome back to your calm corner.</h1>
+          <p>
+            Sign in to continue with check-ins, supportive routines, and mental-health tools built
+            to feel gentle instead of overwhelming.
+          </p>
+
+          <div className="auth-aside-card">
+            <div className="auth-aside-item">
+              <strong>Daily check-ins</strong>
+              <span>Track your mood and notice patterns with less pressure.</span>
+            </div>
+            <div className="auth-aside-item">
+              <strong>Private support tools</strong>
+              <span>Return to saved routines, grounding prompts, and care reminders.</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="auth-card">
+          <div className="auth-card-top">
+            <span className="auth-mark">
+              <ShieldCheck size={18} />
+            </span>
+            <p className="auth-eyebrow">Sign in</p>
+            <h2>Your wellbeing space is waiting.</h2>
+            <p className="auth-intro">Use your email and password to continue.</p>
+          </div>
+
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <label className="auth-field">
+              <span>Email address</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="hello@mindwell.app"
+                required
+              />
+            </label>
+
+            <label className="auth-field">
+              <span>Password</span>
+              <div className="auth-password-wrap">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="auth-icon-button"
+                  onClick={() => setShowPassword((value) => !value)}
+                  aria-label="Toggle password visibility"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </label>
+
+            <div className="auth-form-row">
+              <label className="auth-check">
+                <input type="checkbox" />
+                <span>Keep me signed in</span>
+              </label>
+              <button type="button" className="auth-link-button">
+                Forgot password?
+              </button>
+            </div>
+
+            {success ? (
+              <p className="auth-success-message" role="status">
+                {success}
+              </p>
+            ) : null}
+
+            {error ? (
+              <p className="auth-error-message" role="alert">
+                {error}
+              </p>
+            ) : null}
+
+            <button type="submit" className="auth-primary-button" disabled={loading}>
+              {loading ? "Signing in..." : "Sign in"}
+              <ArrowRight size={18} />
+            </button>
+          </form>
+
+          <div className="auth-footer">
+            <p>New here?</p>
+            <Link to="/signup" className="auth-secondary-button">
+              Create an account
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}

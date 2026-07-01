@@ -31,6 +31,8 @@ import App from "./App";
 test("renders app heading", async () => {
   axios.get.mockResolvedValue({ data: [] });
   render(<App />);
-  const linkElement = await screen.findByText(/welcome to animeworld/i);
+  const linkElement = await screen.findByRole("heading", {
+    name: /a softer place to/i,
+  });
   expect(linkElement).toBeInTheDocument();
 });
