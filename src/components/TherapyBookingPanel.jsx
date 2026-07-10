@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Calendar, HeartHandshake } from "lucide-react";
+import { ArrowRight, HeartHandshake } from "lucide-react";
 
 const APPOINTMENT_STORAGE_KEY = "mindwell-home-therapy-appointment";
 
