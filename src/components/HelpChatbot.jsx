@@ -197,6 +197,18 @@ function buildReply(message, context) {
   }
 
   if (
+    text.includes("therapy") ||
+    text.includes("therapist") ||
+    text.includes("appointment") ||
+    text.includes("book")
+  ) {
+    return {
+      text: "Use the Appointments button to open the dedicated booking page, choose a day from the calendar, and check whether the therapist is free before selecting a slot.",
+      link: { to: "/appointments", label: "Open appointments page" },
+    };
+  }
+
+  if (
     text.includes("habit") ||
     text.includes("routine") ||
     text.includes("wellness") ||

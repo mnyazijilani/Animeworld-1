@@ -16,6 +16,7 @@ import FaqPage from "./components/FaqPage";
 import ProjectsPage from "./components/ProjectsPage";
 import SelfMaintenancePage from "./components/SelfMaintenancePage";
 import QuizPage from "./components/QuizPage";
+import TherapyAppointmentsPage from "./components/TherapyAppointmentsPage";
 import HelpChatbot from "./components/HelpChatbot";
 import { getCurrentSession } from "./utils/auth";
 
@@ -37,6 +38,7 @@ function Navbar({ session }) {
         <Link to="/self-maintenance">Self Care</Link>
         <Link to="/quiz">Quiz</Link>
         <Link to="/support">Support</Link>
+        <Link to="/appointments">Appointments</Link>
         <Link to="/resources">Resources</Link>
         <Link to="/rituals">Rituals</Link>
         <Link to="/journal">Journal</Link>
@@ -95,6 +97,7 @@ function AppShell() {
           <Route path="/community" element={<AnonymousChat />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/support" element={<SupportPage />} />
+          <Route path="/appointments" element={<TherapyAppointmentsPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/rituals" element={<RitualsPage />} />
           <Route path="/faq" element={<FaqPage />} />

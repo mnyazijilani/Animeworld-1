@@ -34,6 +34,12 @@ const supportCards = [
   },
 ];
 
+const appointmentPromises = [
+  "Open a dedicated therapy appointments page",
+  "Choose a day directly from the booking calendar",
+  "See whether the therapist is free before picking a slot",
+];
+
 const ritualPromises = [
   "Gentle yoga sections for easing the mind",
   "Short rituals you can repeat morning or night",
@@ -239,9 +245,12 @@ export default function Getproduct() {
           </p>
 
           <div className="hero-actions">
-            <Link className="primary-action" to="/support">
-              Explore support
+            <Link className="primary-action" to="/appointments">
+              Book therapy appointment
               <ArrowRight size={18} />
+            </Link>
+            <Link className="secondary-action" to="/support">
+              Explore support
             </Link>
             <Link className="secondary-action" to="/rituals">
               <Play size={18} />
@@ -328,6 +337,47 @@ export default function Getproduct() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="appointment-section">
+        <div className="community-card appointment-preview-card">
+          <div className="community-copy">
+            <p className="eyebrow">
+              <Calendar size={16} />
+              Therapy appointments
+            </p>
+            <h2>Open the dedicated booking page when you want to set a session.</h2>
+            <p className="section-text">
+              Therapy appointments now live behind their own button so the
+              calendar, therapist availability, and open slots are easier to
+              focus on.
+            </p>
+
+            <div className="community-list">
+              {appointmentPromises.map((item) => (
+                <div key={item} className="community-list-item">
+                  <HeartHandshake size={18} />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="community-cta">
+            <div className="community-preview">
+              <span className="community-preview-tag">Own page</span>
+              <p>
+                Use the appointments page to choose a day from the calendar and
+                see if the therapist is free before you confirm a session.
+              </p>
+            </div>
+
+            <Link to="/appointments" className="primary-action">
+              Open appointments
+              <ArrowRight size={18} />
+            </Link>
+          </div>
         </div>
       </section>
 
