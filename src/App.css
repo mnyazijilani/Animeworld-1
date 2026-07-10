@@ -1746,6 +1746,13 @@ select {
   cursor: pointer;
 }
 
+.helpbot-trigger-compact {
+  min-height: 46px;
+  padding: 0 14px;
+  gap: 8px;
+  font-size: 0.92rem;
+}
+
 .helpbot-panel {
   width: min(380px, calc(100vw - 20px));
   padding: 18px;
@@ -1758,6 +1765,18 @@ select {
 
 .helpbot-panel-wide {
   width: min(460px, calc(100vw - 20px));
+}
+
+.helpbot-panel-compact {
+  width: min(340px, calc(100vw - 20px));
+  padding: 16px;
+  border-radius: 24px;
+}
+
+.helpbot-panel-page {
+  width: min(100%, 1120px);
+  padding: 24px;
+  border-radius: 32px;
 }
 
 .helpbot-backdrop {
@@ -1811,6 +1830,9 @@ select {
 }
 
 .helpbot-text-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   min-height: 36px;
   padding: 0 12px;
   border: 1px solid rgba(83, 61, 40, 0.12);
@@ -1818,6 +1840,10 @@ select {
   background: rgba(255, 255, 255, 0.72);
   color: var(--text);
   cursor: pointer;
+}
+
+.helpbot-exit-link {
+  text-decoration: none;
 }
 
 .helpbot-hint {
@@ -1937,6 +1963,27 @@ select {
   padding-right: 4px;
 }
 
+.helpbot-panel-compact .helpbot-thread {
+  max-height: 220px;
+}
+
+.helpbot-panel-compact .helpbot-dashboard {
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.helpbot-panel-compact .helpbot-card {
+  padding: 12px;
+}
+
+.helpbot-panel-compact .helpbot-quick-list {
+  margin-top: 12px;
+}
+
+.helpbot-panel-compact .helpbot-form {
+  margin-top: 12px;
+}
+
 .helpbot-message {
   display: grid;
   gap: 8px;
@@ -2018,6 +2065,41 @@ select {
   background: var(--accent);
   color: #fff;
   cursor: pointer;
+}
+
+.helpbot-page {
+  min-height: 100vh;
+  padding: 36px 20px 56px;
+}
+
+.helpbot-page-shell {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.helpbot-page-top {
+  display: grid;
+  gap: 12px;
+  padding: 30px 34px;
+  border: 1px solid rgba(83, 61, 40, 0.1);
+  border-radius: 34px;
+  background: rgba(255, 250, 244, 0.88);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.helpbot-page-top h1 {
+  margin: 0;
+  max-width: 12ch;
+}
+
+.helpbot-page-lead {
+  max-width: 64ch;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
 }
 
 .rituals-page-grid {
@@ -2640,8 +2722,27 @@ select {
     width: min(100vw - 20px, 380px);
   }
 
+  .helpbot-panel-page {
+    width: 100%;
+    padding: 22px;
+  }
+
   .helpbot-trigger {
     min-height: 52px;
+  }
+
+  .helpbot-trigger-compact {
+    min-height: 44px;
+    padding: 0 12px;
+  }
+
+  .helpbot-page {
+    padding: 24px 16px 40px;
+  }
+
+  .helpbot-page-top {
+    padding: 22px;
+    border-radius: 28px;
   }
 
   .chat-room-header,

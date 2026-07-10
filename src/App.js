@@ -44,6 +44,7 @@ function Navbar({ session }) {
         <Link to="/journal">Journal</Link>
         <Link to="/community">Community</Link>
         <Link to="/faq">FAQ</Link>
+        <Link to="/chatbot">Chatbot</Link>
       </div>
 
       <div className="navbar-actions">
@@ -104,9 +105,10 @@ function AppShell() {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/self-maintenance" element={<SelfMaintenancePage />} />
           <Route path="/quiz" element={<QuizPage />} />
+          <Route path="/chatbot" element={<HelpChatbot isPage session={session} />} />
         </Routes>
 
-        <HelpChatbot />
+        <HelpChatbot session={session} />
       </div>
     </div>
   );
